@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.58e2e335.css",
+    "main.js": "/static/js/main.ed299e5e.js",
+    "static/media/tuts.gif": "/static/media/tuts.f1c78b06d27337325380.gif",
+    "static/media/explanation.gif": "/static/media/explanation.167bf7b461af7a7d0e6b.gif",
+    "index.html": "/index.html",
+    "main.58e2e335.css.map": "/static/css/main.58e2e335.css.map",
+    "main.ed299e5e.js.map": "/static/js/main.ed299e5e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.58e2e335.css",
+    "static/js/main.ed299e5e.js"
+  ]
+}
