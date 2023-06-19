@@ -1,70 +1,22 @@
-# Getting Started with Create React App
+Welcome to the SensiTrain Project Annotation Dashboard!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The SensiTrain Project aims to annotate potentially offensive parts of online interactions from popular social media platform Reddit. Our goal is to identify communication that may be offensive to a particular group of people. Your annotations will contribute to training a model for improved understanding and detection.
 
-## Available Scripts
+Instructions:
 
-In the project directory, you can run:
+Please follow these steps for annotation:
 
-### `npm start`
+1) Watch the tutorial video: Before you begin, we recommend watching the tutorial video that demonstrates the annotation process. It provides a clear overview of how to annotate offensive content effectively. You can find the tutorial video by clicking the "View Tutorial" button.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2) Review the post: Start by reviewing the post carefully. If everything appears fine and there is no offensive content, simply skip to the next post using the provided navigation.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3) Annotate offensive content: To annotate offensive content, click on the tag that represents the specific type of offense. Then, click and hold the mouse button to drag and highlight the part of the text or image that you believe is offensive.
 
-### `npm test`
+4) Add an explanation: After highlighting the offensive content, provide an explanation in the designated field on the right side. Explain why you consider the highlighted part to be potentially offensive. Be as detailed as possible to provide valuable insights for training the model.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+5) Submit and proceed: Once you have completed the annotation for a post, click the submit button to move on to the next post in the queue.
 
-### `npm run build`
+Thank you for participating in the SensiTrain Project! Your contributions are essential in enhancing our understanding and promoting a more inclusive online environment.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Access the Dashboard by clicking the link below:
+https://reddit-crawler-914f5.web.app/
