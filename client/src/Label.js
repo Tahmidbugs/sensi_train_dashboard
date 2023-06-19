@@ -13,24 +13,55 @@ export const InitializeLabelStudio = (
 
   const handleAnnotation = (LS, annotation) => {
     try {
-      if (annotation.serializeAnnotation()[0].meta?.text[0] == undefined)
-        throw new Error("Please provide an explanation for your annotation");
+      console.log("Annotation: ", annotation);
+      if (annotation.serializeAnnotation()[0].meta?.text[0] == undefined) {
+        throw new Error("No explanation provided");
+      }
       const offensiveContentArray = annotation
         .serializeAnnotation()
         .map((ann) => {
+          let typeofOffense;
+
+          if (props.image) {
+            if (ann.value.rectanglelabels && ann.value.labels) {
+              typeofOffense = [
+                ...ann.value.rectanglelabels,
+                ...ann.value.labels,
+              ][0];
+            } else if (ann.value.rectanglelabels) {
+              typeofOffense = ann.value.rectanglelabels[0];
+            } else if (ann.value.labels) {
+              typeofOffense = ann.value.labels[0];
+            }
+          }
+          const explanation = ann.meta.text[0];
+
+          let offendingContent = {};
+
+          if (props.image) {
+            if (ann.value.x) {
+              offendingContent = {
+                height: ann.value.height,
+                width: ann.value.width,
+                xCoordinate: ann.value.x,
+                yCoordinate: ann.value.y,
+              };
+            }
+
+            if (ann.value.text) {
+              offendingContent = {
+                ...offendingContent,
+                text: ann.value.text,
+              };
+            }
+          } else {
+            offendingContent = ann.value.text;
+          }
+
           return {
-            typeofOffense: props.image
-              ? ann.value.rectanglelabels[0]
-              : ann.value.labels[0],
-            explanation: ann.meta.text[0],
-            offendingContent: props.image
-              ? {
-                  height: ann.value.height,
-                  width: ann.value.width,
-                  xCoordinate: ann.value.x,
-                  yCoordinate: ann.value.y,
-                }
-              : ann.value.text,
+            typeofOffense,
+            explanation,
+            offendingContent,
           };
         });
 
@@ -47,7 +78,7 @@ export const InitializeLabelStudio = (
 
       setSubmitted(true);
     } catch (error) {
-      alert(error);
+      setAlertOpen(true);
     }
   };
 
@@ -105,7 +136,7 @@ export const InitializeLabelStudio = (
             </RectangleLabels> 
             `
           }
-            <Image name="image" value="$image" width="300px" height="300px" zoom="true" rotateControl="true" zoomControl="true" style="margin-top: 20px;" />
+          <Image name="image" value="$image" width="300px" height="300px" zoom="true" rotateControl="true" zoomControl="true" style="margin-top: 20px;" />          
           `
       }
       
@@ -131,7 +162,9 @@ export const InitializeLabelStudio = (
       }
     </View>
   `,
-    interfaces: disabled ? [] : ["side-column", "controls"],
+    interfaces: disabled
+      ? []
+      : ["side-column", "controls", "submit", "update", "panel"],
     task: {
       annotations: [],
       predictions: [],
@@ -154,6 +187,7 @@ export const InitializeLabelStudio = (
     },
 
     onSubmitAnnotation: handleAnnotation,
+
     onUpdateAnnotation: handleAnnotation,
   };
 

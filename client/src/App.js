@@ -34,7 +34,7 @@ const App = () => {
     try {
       // Make OCR request to Google Cloud Vision API
       const response = await axios.post(
-        "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyBDVaArp8HtU6bTrG7bM7ATEbPa60iDPdc",
+        "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDHk3nMkLtbyEuO8jphcAVyQS9M-LCpvAw",
         {
           requests: [
             {
@@ -187,6 +187,7 @@ const App = () => {
   // Move to the next post
   const nextPost = async () => {
     setcontextPost(null);
+    setViewContext(true);
     console.log("current post was ", currentPost);
     const index = posts.indexOf(currentPost);
     let alreadyAnnotated = isAlreadyAnnotated(index + 1);
@@ -235,6 +236,7 @@ const App = () => {
   // Move to the previous post
   const previousPost = () => {
     setcontextPost(null);
+    setViewContext(true);
     const index = posts.indexOf(currentPost);
     let alreadyAnnotated = isAlreadyAnnotated(index - 1);
 
@@ -503,14 +505,7 @@ const LoadingAnimation = () => {
 
 const ContextButton = ({ showParentPost, viewContext }) => {
   return (
-    <button
-      onClick={showParentPost}
-      style={{
-        marginLeft: "0px",
-        fontSize: "16px",
-        display: "block",
-      }}
-    >
+    <button onClick={showParentPost} className="contextButton">
       {viewContext ? "Confused? View Context" : "Hide Context"}
     </button>
   );
