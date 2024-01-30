@@ -7,77 +7,83 @@ export const InitializeLabelStudio = (
   props,
   setSubmitted,
   setAlertOpen,
-  disabled = false
+  userLabels,
+  username,
+  disabled = false,
+  userData
 ) => {
   console.log("Post received on LabelStudio interface: ", props);
+  console.log("username received on LabelStudio interface: ", username);
+  console.log("Custom Labels received on LabelStudio interface: ", userLabels);
+  console.log("userData received on LabelStudio interface: ", userData);
+
+  function getRandomColor() {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  // Generate user label configuration with random colors
+  const userLabelConfig = userLabels
+    .map((label) => {
+      const background = getRandomColor();
+      const textColor = getRandomColor();
+      return `<Label value="${label}" background="${background}" textColor="${textColor}"/>`;
+    })
+    .join("");
 
   const handleAnnotation = (LS, annotation) => {
     try {
-      console.log("Annotation: ", annotation);
-      if (annotation.serializeAnnotation()[0].meta?.text[0] == undefined) {
-        throw new Error("No explanation provided");
-      }
+      console.log("Annotation received: ", annotation);
+      if (annotation.serializeAnnotation()[0].meta?.text[0] === undefined)
+        throw new Error("Please provide an explanation for your annotation");
       const offensiveContentArray = annotation
         .serializeAnnotation()
         .map((ann) => {
-          let typeofOffense;
-
-          if (props.image) {
-            if (ann.value.rectanglelabels && ann.value.labels) {
-              typeofOffense = [
-                ...ann.value.rectanglelabels,
-                ...ann.value.labels,
-              ][0];
-            } else if (ann.value.rectanglelabels) {
-              typeofOffense = ann.value.rectanglelabels[0];
-            } else if (ann.value.labels) {
-              typeofOffense = ann.value.labels[0];
-            }
-          }
-          const explanation = ann.meta.text[0];
-
-          let offendingContent = {};
-
-          if (props.image) {
-            if (ann.value.x) {
-              offendingContent = {
-                height: ann.value.height,
-                width: ann.value.width,
-                xCoordinate: ann.value.x,
-                yCoordinate: ann.value.y,
-              };
-            }
-
-            if (ann.value.text) {
-              offendingContent = {
-                ...offendingContent,
-                text: ann.value.text,
-              };
-            }
-          } else {
-            offendingContent = ann.value.text;
-          }
-
+          console.log("ann: ", ann);
           return {
-            typeofOffense,
-            explanation,
-            offendingContent,
+            typeofOffense:
+              ann.type === "rectanglelabels"
+                ? ann.value.rectanglelabels[0]
+                : ann.value.labels[0],
+            explanation: ann.meta.text[0],
+            offendingContent:
+              ann.type === "rectanglelabels"
+                ? {
+                    height: ann.value.height,
+                    width: ann.value.width,
+                    xCoordinate: ann.value.x,
+                    yCoordinate: ann.value.y,
+                  }
+                : ann.value.text,
           };
         });
 
       const annotatedData = {
         post_id: props.id,
-        content: props.content,
         offensive_content: offensiveContentArray,
+        userData: userData,
       };
-
+      if (props.image !== undefined) {
+        annotatedData.image = props.image;
+      }
+      if (props.content !== undefined && props.content !== "") {
+        annotatedData.content = props.content;
+      }
+      if (props.extractedText !== undefined && props.extractedText !== "") {
+        annotatedData.extractedText = props.extractedText;
+      }
       console.log("annotatedData: ", annotatedData);
       const db = getDatabase(app);
-      push(ref(db, "/Annotated Data"), annotatedData);
+      push(ref(db, `Incomplete/Annotated_by_${username}`), annotatedData);
       console.log("Data pushed to firebase");
 
       setSubmitted(true);
     } catch (error) {
+      console.log(error);
       setAlertOpen(true);
     }
   };
@@ -108,6 +114,9 @@ export const InitializeLabelStudio = (
               <Label value="Religion" background="#9C27B0" textColor="#FFFFFF"/>
               <Label value="Sexual Orientation" background="#E91E63" textColor="#FFFFFF"/>
               <Label value="Disability" background="#795548" textColor="#FFFFFF"/>
+              <Label value="Other" background="#495548" textColor="#FFFFFF"/>
+              
+              ${userLabelConfig} 
             </Labels>
             `
           }
@@ -133,6 +142,8 @@ export const InitializeLabelStudio = (
               <Label value="Religion" background="#9C27B0" textColor="#FFFFFF"/>
               <Label value="Sexual Orientation" background="#E91E63" textColor="#FFFFFF"/>
               <Label value="Disability" background="#795548" textColor="#FFFFFF"/>
+              <Label value="Other" background="#795548" textColor="#FFFFFF"/>
+              ${userLabelConfig}
             </RectangleLabels> 
             `
           }
@@ -144,6 +155,9 @@ export const InitializeLabelStudio = (
         props.extractedText !== undefined &&
         `
         <Header value="Text found on the image" name="parent" level="4" />
+        ${
+          !disabled &&
+          `
         <Labels name="label" toName="extractedText" selectionWrap="true" showInlineAnnotator="true">
           <Label value="Racial" background="#F44336" textColor="#FFFFFF"/>
           <Label value="Gender" background="#FF9800" textColor="#FFFFFF"/>
@@ -154,9 +168,10 @@ export const InitializeLabelStudio = (
           <Label value="Religion" background="#9C27B0" textColor="#FFFFFF"/>
           <Label value="Sexual Orientation" background="#E91E63" textColor="#FFFFFF"/>
           <Label value="Disability" background="#795548" textColor="#FFFFFF"/>
-        </Labels>
-        
-        
+          <Label value="Other" background="#795548" textColor="#FFFFFF"/>
+          ${userLabelConfig} 
+        </Labels>`
+        }
         <Text name="extractedText" value="$extractedText" style="font-size: 16px; margin-top: 10px;" />
       `
       }
@@ -180,15 +195,23 @@ export const InitializeLabelStudio = (
       },
     },
     onLabelStudioLoad: function (LS) {
+      // Add custom event listener for label click
+      document.querySelectorAll(".label-studio .ls-label").forEach((label) => {
+        label.addEventListener("click", () => {
+          console.log("User clicked on a label");
+        });
+      });
+
       var c = LS.annotationStore.addAnnotation({
         userGenerate: true,
       });
       LS.annotationStore.selectAnnotation(c.id);
     },
-
     onSubmitAnnotation: handleAnnotation,
-
-    onUpdateAnnotation: handleAnnotation,
+    onUpdateAnnotation: (LS, annotation) => {
+      console.log("User has selected an annotation");
+      handleAnnotation(LS, annotation);
+    },
   };
 
   new LabelStudio("label-studio", labelStudioConfig);

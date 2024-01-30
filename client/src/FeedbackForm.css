@@ -1,0 +1,83 @@
+.feedback-form {
+    font-family: Arial, sans-serif;
+  }
+  
+  .feedback-section {
+    margin-bottom: 20px;
+  }
+  
+  .radio-buttons label {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .radio-buttons input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  .radio-buttons label:hover {
+    background-color: #f0f0f0;
+  }
+  
+  textarea {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+  }
+
+  .skip-button {
+    background-color: #4c8eaf;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .submit-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+ 
+
+  .feedback-container {
+    text-align: center;
+    padding: 20px;
+    max-width: 70%;
+    margin: auto;
+  }
+  
+  .feedback-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .feedback-intro, .feedback-outro {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+  
+  /* // ... existing styles for form, buttons, etc. ... */
+  
+  .feedback-outro a {
+    color: #4caf50;
+    text-decoration: none;
+  }
+  
+  .feedback-outro a:hover {
+    text-decoration: underline;
+  }
+  

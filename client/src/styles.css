@@ -16,6 +16,42 @@
   font-family: Josefin Sans;
   z-index: 0;
 }
+/* App.css */
+.scale-hover:hover {
+  transform: scale(1.1);
+  transition: transform 0.5s ease-in-out; /* Smooth transition for scaling */
+  
+}
+.boxFont {
+  font-size: 55px;
+  color: black;
+  border: 1px solid black;
+  width: 5rem;
+  padding: 10px;
+  height:5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  background-color: white;
+}
+
+.boxLottie {
+  font-size: 55px;
+  color: black;
+  border: 1px solid black;
+  width: 5rem; /* Added 'px' for width */
+  display: flex;
+  height:5rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: black;
+  border-radius: 10px; /* Added 'px' for border-radius */
+}
+
+
 
 .label-area {
     display: flex;
@@ -46,6 +82,7 @@
     margin-top: 0;
     margin-bottom: 2rem;
   }
+
   
   .dashboard-header-button {
     font-size: 1.2rem;
@@ -168,7 +205,7 @@
   margin-left: 0px;
   font-size: 16px;
   display: block;
-  padding: 10px 20px;
+  padding: 10px 10px;
   background-color: #20717A;
   color: white;
   border: none;
@@ -181,3 +218,66 @@
 .contextButton:hover {
   transform: scale(1.1);
 }
+
+
+
+
+
+
+/* App.module.css */
+
+.addButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: #335880;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: larger;
+  padding: 10px 10px; 
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.deleteButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-right: 2px;
+  background-color: #6f1944;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: larger;
+  padding: 10px 10px; 
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.deleteButton:hover {
+  background-color: #c81e1e;
+}
+.addButton:hover {
+  background-color: #0056b3;
+}
+
+.inputField {
+  display: none;
+  margin: 0px 0px;
+  margin-right: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  transition: border 0.3s;
+}
+
+.inputField:focus {
+  border-color: #007BFF;
+}
+
+.showInput {
+  display: block;
+}
+
